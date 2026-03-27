@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Our Projects - Dream Home Design</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #f8f9fa;
+        }
+
+        /* Header Styles */
+        .static-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+
+        .logo span {
+            color: #ffd700;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .nav-menu a:hover, .nav-menu a.active {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .signin-btn {
+            background: #ffd700;
+            color: #1e3c72;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .signin-btn:hover {
+            background: #ffed4a;
+            transform: scale(1.05);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            animation: fadeIn 0.3s;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background: white;
+            margin: 3% auto;
+            padding: 2rem;
+            width: 90%;
+            max-width: 900px;
+            border-radius: 20px;
+            position: relative;
+            animation: slideDown 0.3s;
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+            transition: 0.2s;
+            z-index: 10;
+        }
+
+        .close:hover {
+            color: #1e3c72;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-40px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 20px;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(30,60,114,0.9), rgba(42,82,152,0.9)), url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2053&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 4rem 20px;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            animation: fadeInUp 1s 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 3rem;
+        }
+
+        .filter-title {
+            font-size: 1.5rem;
+            color: #1e3c72;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .filter-group select, .filter-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: #1e3c72;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2a5298;
+            transform: scale(1.02);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .project-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #ffd700;
+            color: #1e3c72;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-weight: bold;
+            z-index: 1;
+            font-size: 0.85rem;
+        }
+
+        .project-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .project-card:hover .project-image {
+            transform: scale(1.05);
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-category {
+            color: #ffd700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            color: #1e3c72;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-specs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            color: #666;
+            font-size: 0.95rem;
+            flex-wrap: wrap;
+        }
+
+        .project-specs i {
+            color: #1e3c72;
+            margin-right: 0.3rem;
+        }
+
+        .project-description {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .project-rating {
+            color: #ffd700;
+            margin-bottom: 1rem;
+        }
+
+        .project-rating span {
+            color: #666;
+            margin-left: 0.5rem;
+        }
+
+        .project-price {
+            font-size: 1.3rem;
+            color: #1e3c72;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .project-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #1e3c72;
+            color: #1e3c72;
+            flex: 1;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .btn-outline:hover {
+            background: #1e3c72;
+            color: white;
+        }
+
+        .btn-gold {
+            background: #ffd700;
+            color: #1e3c72;
+            flex: 1;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .btn-gold:hover {
+            background: #ffed4a;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .page-item {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid #ddd;
+        }
+
+        .page-item:hover, .page-item.active {
+            background: #1e3c72;
+            color: white;
+            border-color: #1e3c72;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 4rem 0;
+            margin-top: 4rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 2rem;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #ffd700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Footer Styles */
+        .footer {
+            background: #1a2634;
+            color: white;
+            padding: 4rem 0 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-section h3 {
+            color: #ffd700;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-section p {
+            color: #ccc;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: #ffd700;
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            color: white;
+            background: rgba(255,255,255,0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: #ffd700;
+            color: #1a2634;
+            transform: translateY(-3px);
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .newsletter-form button {
+            background: #ffd700;
+            color: #1a2634;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #ccc;
+        }
+
+        /* Detail Modal Specific */
+        .detail-modal-body {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .detail-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+        .detail-specs {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 12px;
+        }
+        .detail-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .btn-back {
+            background: #6c757d;
+            color: white;
+        }
+        .btn-back:hover {
+            background: #5a6268;
+        }
+        @media (max-width: 768px) {
+            .header-container { flex-direction: column; gap: 1rem; }
+            .nav-menu { justify-content: center; gap: 1rem; }
+            .page-header h1 { font-size: 2rem; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .modal-content { margin: 5% auto; width: 95%; padding: 1.2rem; }
+        }
+        .loading, .no-results { text-align: center; padding: 2rem; display: none; }
+    </style>
+</head>
+<body>
+    <header class="static-header">
+        <div class="header-container">
+            <a href="/" class="logo">Dream<span>Home</span></a>
+            <nav class="nav-menu">
+                <a href="/">Home</a>
+                <a href="/projects" class="active">Projects</a>
+                <a href="/architecture">Architecture</a>
+                <a href="/about">About</a>
+                <a href="/reviews">Reviews</a>
+                <a href="/contact">Contact</a>
+            </nav>
+            <div class="auth-buttons">
+                <button class="signin-btn" onclick="openSignInModal()"><i class="fas fa-user"></i> Sign In</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sign In Modal -->
+    <div id="signinModal" class="modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <span class="close" onclick="closeSignInModal()">&times;</span>
+            <h2><i class="fas fa-sign-in-alt"></i> Sign In</h2>
+            <form id="signinForm" onsubmit="handleSignIn(event)">
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label>Email</label>
+                    <input type="email" id="email" placeholder="Enter your email" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px;" required>
+                </div>
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label>Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px;" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; background: #ffd700; color: #1e3c72;">Sign In</button>
+            </form>
+            <p style="text-align: center; margin-top: 1rem;">Don't have an account? <a href="#" onclick="alert('Register demo: just close and enjoy!')">Register here</a></p>
+        </div>
+    </div>
+
+    <!-- Project Detail Modal (Dynamic) -->
+    <div id="projectDetailModal" class="modal">
+        <div class="modal-content" id="detailModalContent">
+            <span class="close" onclick="closeDetailModal()">&times;</span>
+            <div id="dynamicDetailContent"></div>
+        </div>
+    </div>
+
+    <section class="page-header">
+        <h1>Our Premium Projects</h1>
+        <p>Explore our collection of beautifully designed homes, each crafted with attention to detail and modern aesthetics</p>
+    </section>
+
+    <div class="container">
+        <div class="filter-section">
+            <div class="filter-title"><i class="fas fa-filter"></i><span>Filter Projects</span></div>
+            <div class="filter-grid">
+                <div class="filter-group"><label><i class="fas fa-tag"></i> Category</label><select id="categoryFilter"><option value="all">All Categories</option><option value="villa">Villas</option><option value="apartment">Apartments</option><option value="farmhouse">Farmhouses</option><option value="penthouse">Penthouses</option><option value="cottage">Cottages</option></select></div>
+                <div class="filter-group"><label><i class="fas fa-ruler-combined"></i> Size (sq ft)</label><select id="sizeFilter"><option value="all">All Sizes</option><option value="0-1500">Under 1500 sq ft</option><option value="1500-2500">1500 - 2500 sq ft</option><option value="2500-3500">2500 - 3500 sq ft</option><option value="3500+">Above 3500 sq ft</option></select></div>
+                <div class="filter-group"><label><i class="fas fa-bed"></i> BHK</label><select id="bhkFilter"><option value="all">All</option><option value="1">1 BHK</option><option value="2">2 BHK</option><option value="3">3 BHK</option><option value="4">4 BHK</option><option value="5">5+ BHK</option></select></div>
+                <div class="filter-group"><label><i class="fas fa-rupee-sign"></i> Budget Range</label><select id="budgetFilter"><option value="all">All Budgets</option><option value="0-50l">Under 50 Lakhs</option><option value="50l-1cr">50 Lakhs - 1 Cr</option><option value="1cr-2cr">1 Cr - 2 Cr</option><option value="2cr+">Above 2 Cr</option></select></div>
+            </div>
+            <div class="filter-actions"><button class="btn btn-secondary" onclick="resetFilters()"><i class="fas fa-undo"></i> Reset</button><button class="btn btn-primary" onclick="applyFilters()"><i class="fas fa-search"></i> Apply Filters</button></div>
+        </div>
+        <div id="loading" class="loading"><i class="fas fa-spinner"></i><p>Loading projects...</p></div>
+        <div id="noResults" class="no-results"><i class="fas fa-home"></i><h3>No Projects Found</h3><p>Try adjusting your filters</p></div>
+        <div id="projectsGrid" class="projects-grid"></div>
+        <div class="pagination" id="paginationControls"></div>
+    </div>
+
+    <section class="stats-section"><div class="container"><div class="stats-grid"><div class="stat-item"><div class="stat-number">500+</div><div class="stat-label">Projects Completed</div></div><div class="stat-item"><div class="stat-number">25+</div><div class="stat-label">Expert Architects</div></div><div class="stat-item"><div class="stat-number">1000+</div><div class="stat-label">Happy Clients</div></div><div class="stat-item"><div class="stat-number">15+</div><div class="stat-label">Years Experience</div></div></div></div></section>
+
+    <footer class="footer"><div class="footer-container"><div class="footer-section"><h3>Dream<span style="color:#ffd700;">Home</span></h3><p>Creating beautiful, functional, and sustainable homes that reflect your unique style and needs.</p><div class="social-links"><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-linkedin-in"></i></a></div></div><div class="footer-section"><h3>Quick Links</h3><ul><li><a href="/">Home</a></li><li><a href="/projects">Our Projects</a></li><li><a href="/architecture">Architects</a></li><li><a href="/about">About Us</a></li></ul></div><div class="footer-section"><h3>Services</h3><ul><li><a href="#">Home Design</a></li><li><a href="#">Interior Design</a></li><li><a href="#">3D Visualization</a></li><li><a href="#">Consultation</a></li></ul></div><div class="footer-section"><h3>Newsletter</h3><p>Subscribe to get updates</p><form class="newsletter-form" onsubmit="subscribeNewsletter(event)"><input type="email" id="newsletterEmail" placeholder="Your email" required><button type="submit"><i class="fas fa-paper-plane"></i></button></form></div></div><div class="footer-bottom"><p>&copy; 2024 Dream Home Design. All rights reserved.</p></div></footer>
+
+<script>
+    // Projects Data (exactly matching original images & details)
+    const projectsData = [
+        { id:1, category:"villa", title:"Modern Luxury Villa", size:3500, bhk:4, budget:2.5, budgetRaw:"2.5cr", price:"₹ 2.5 Cr", desc:"Contemporary design with smart home features, swimming pool, and landscaped garden.", img:"https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=2075&q=80", rating:5, reviews:45, badge:"Featured", specs:"4 Bath", categoryName:"Luxury Villa" },
+        { id:2, category:"farmhouse", title:"Luxury Farmhouse", size:5000, bhk:5, budget:3.8, budgetRaw:"3.8cr", price:"₹ 3.8 Cr", desc:"Spacious farmhouse with organic garden, private pool, and servant quarters.", img:"https://images.unsplash.com/photo-1600585154526-990dced4db0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80", rating:4.5, reviews:38, badge:"Premium", specs:"5 Bath", categoryName:"Farmhouse" },
+        { id:3, category:"apartment", title:"Modern Apartment", size:2200, bhk:3, budget:1.2, budgetRaw:"1.2cr", price:"₹ 1.2 Cr", desc:"Contemporary apartment in prime location with modern amenities and city view.", img:"https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2053&q=80", rating:5, reviews:52, badge:"", specs:"3 Bath", categoryName:"Apartment" },
+        { id:4, category:"penthouse", title:"Luxury Penthouse", size:4000, bhk:4, budget:4.2, budgetRaw:"4.2cr", price:"₹ 4.2 Cr", desc:"Stunning penthouse with private terrace, jacuzzi, and panoramic city views.", img:"https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80", rating:5, reviews:28, badge:"Luxury", specs:"4 Bath", categoryName:"Penthouse" },
+        { id:5, category:"cottage", title:"Cozy Cottage", size:1800, bhk:2, budget:0.75, budgetRaw:"75l", price:"₹ 75 Lakhs", desc:"Charming cottage with garden, fireplace, and modern interiors.", img:"https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80", rating:4.5, reviews:33, badge:"", specs:"2 Bath", categoryName:"Cottage" },
+        { id:6, category:"villa", title:"Mediterranean Villa", size:3200, bhk:4, budget:2.1, budgetRaw:"2.1cr", price:"₹ 2.1 Cr", desc:"Mediterranean-style villa with courtyard, fountain, and terracotta details.", img:"https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80", rating:5, reviews:41, badge:"", specs:"3 Bath", categoryName:"Villa" }
+    ];
+
+    let currentFilters = { category:"all", size:"all", bhk:"all", budget:"all" };
+    let currentPage = 1;
+    const itemsPerPage = 6;
+
+    function renderProjects() {
+        let filtered = projectsData.filter(p => {
+            if(currentFilters.category !== "all" && p.category !== currentFilters.category) return false;
+            if(currentFilters.bhk !== "all") { let bhkVal = parseInt(currentFilters.bhk); if(p.bhk !== bhkVal && !(currentFilters.bhk === "5" && p.bhk >=5)) if(p.bhk != currentFilters.bhk) return false; }
+            if(currentFilters.size !== "all") {
+                let [minS, maxS] = currentFilters.size.split("-");
+                if(currentFilters.size === "3500+") { if(p.size < 3500) return false; }
+                else if(minS && maxS) { if(p.size < parseInt(minS) || p.size > parseInt(maxS)) return false; }
+            }
+            if(currentFilters.budget !== "all") {
+                let val = p.budget;
+                if(currentFilters.budget === "0-50l" && val > 0.5) return false;
+                if(currentFilters.budget === "50l-1cr" && (val < 0.5 || val > 1)) return false;
+                if(currentFilters.budget === "1cr-2cr" && (val < 1 || val > 2)) return false;
+                if(currentFilters.budget === "2cr+" && val < 2) return false;
+            }
+            return true;
+        });
+        
+        if(filtered.length === 0) { document.getElementById("projectsGrid").innerHTML = ""; document.getElementById("noResults").style.display = "block"; document.getElementById("paginationControls").innerHTML = ""; return; }
+        else document.getElementById("noResults").style.display = "none";
+        
+        const start = (currentPage-1)*itemsPerPage;
+        const paginated = filtered.slice(start, start+itemsPerPage);
+        const grid = document.getElementById("projectsGrid");
+        grid.innerHTML = paginated.map(p => {
+            let starHtml = '<i class="fas fa-star"></i>'.repeat(Math.floor(p.rating)) + (p.rating % 1 ? '<i class="fas fa-star-half-alt"></i>' : '');
+            let badgeHtml = p.badge ? `<div class="project-badge">${p.badge}</div>` : "";
+            return `<div class="project-card" data-id="${p.id}">
+                ${badgeHtml}
+                <img src="${p.img}" class="project-image" alt="${p.title}" onerror="this.src='https://via.placeholder.com/800x600?text=${encodeURIComponent(p.title)}'">
+                <div class="project-content">
+                    <div class="project-category">${p.categoryName}</div>
+                    <h3 class="project-title">${p.title}</h3>
+                    <div class="project-specs"><span><i class="fas fa-ruler-combined"></i> ${p.size} sq ft</span><span><i class="fas fa-bed"></i> ${p.bhk} BHK</span><span><i class="fas fa-bath"></i> ${p.specs}</span></div>
+                    <p class="project-description">${p.desc}</p>
+                    <div class="project-rating">${starHtml} <span>(${p.reviews} reviews)</span></div>
+                    <div class="project-price">${p.price}</div>
+                    <div class="project-actions">
+                        <button class="btn btn-outline" onclick="openProjectDetail(${p.id})"><i class="fas fa-info-circle"></i> View Details</button>
+                        <button class="btn btn-gold" onclick="bookNow(${p.id})"><i class="fas fa-calendar-check"></i> Book Now</button>
+                    </div>
+                </div>
+            </div>`;
+        }).join("");
+        
+        // pagination render
+        let totalPages = Math.ceil(filtered.length / itemsPerPage);
+        let paginationDiv = document.getElementById("paginationControls");
+        if(totalPages <= 1) { paginationDiv.innerHTML = ""; return; }
+        let pagesHtml = `<div class="page-item" onclick="changePage(${currentPage-1})" ${currentPage===1?'style="pointer-events:none;opacity:0.5"':''}><i class="fas fa-chevron-left"></i></div>`;
+        for(let i=1;i<=totalPages;i++) pagesHtml += `<div class="page-item ${i===currentPage?'active':''}" onclick="changePage(${i})">${i}</div>`;
+        pagesHtml += `<div class="page-item" onclick="changePage(${currentPage+1})" ${currentPage===totalPages?'style="pointer-events:none;opacity:0.5"':''}><i class="fas fa-chevron-right"></i></div>`;
+        paginationDiv.innerHTML = pagesHtml;
+    }
+
+    function applyFilters() {
+        currentFilters.category = document.getElementById("categoryFilter").value;
+        currentFilters.size = document.getElementById("sizeFilter").value;
+        currentFilters.bhk = document.getElementById("bhkFilter").value;
+        currentFilters.budget = document.getElementById("budgetFilter").value;
+        currentPage = 1;
+        renderProjects();
+    }
+    function resetFilters() {
+        document.getElementById("categoryFilter").value = "all";
+        document.getElementById("sizeFilter").value = "all";
+        document.getElementById("bhkFilter").value = "all";
+        document.getElementById("budgetFilter").value = "all";
+        applyFilters();
+    }
+    function changePage(page) { currentPage = page; renderProjects(); }
+    
+    // Project Detail Modal: showing full image + specs + book now + back
+    function openProjectDetail(id) {
+        const project = projectsData.find(p => p.id === id);
+        if(!project) return;
+        const stars = '<i class="fas fa-star"></i>'.repeat(Math.floor(project.rating)) + (project.rating % 1 ? '<i class="fas fa-star-half-alt"></i>' : '');
+        const detailHtml = `
+            <div class="detail-modal-body">
+                <img src="${project.img}" class="detail-image" alt="${project.title}" onerror="this.src='https://via.placeholder.com/800x400?text=${project.title}'">
+                <h2 style="color:#1e3c72;">${project.title}</h2>
+                <div class="detail-specs">
+                    <span><i class="fas fa-ruler-combined"></i> ${project.size} sq ft</span>
+                    <span><i class="fas fa-bed"></i> ${project.bhk} BHK</span>
+                    <span><i class="fas fa-bath"></i> ${project.specs}</span>
+                    <span><i class="fas fa-tag"></i> ${project.categoryName}</span>
+                </div>
+                <div class="project-rating">${stars} <span>(${project.reviews} reviews)</span></div>
+                <p style="font-size:1.1rem; line-height:1.5;">${project.desc}</p>
+                <div class="project-price" style="font-size:1.8rem;">${project.price}</div>
+                <div class="detail-actions">
+                    <button class="btn btn-back" onclick="closeDetailModal()"><i class="fas fa-arrow-left"></i> Back</button>
+                    <button class="btn btn-gold" onclick="bookNow(${project.id}); closeDetailModal();"><i class="fas fa-calendar-check"></i> Book Now</button>
+                </div>
+            </div>
+        `;
+        document.getElementById("dynamicDetailContent").innerHTML = detailHtml;
+        document.getElementById("projectDetailModal").style.display = "block";
+    }
+    function closeDetailModal() { document.getElementById("projectDetailModal").style.display = "none"; }
+    function bookNow(projectId) { alert(`Booking initiated for Project ID: ${projectId}. Our team will contact you shortly.`); }
+    
+    // SignIn Modal
+    function openSignInModal() { document.getElementById("signinModal").style.display = "block"; }
+    function closeSignInModal() { document.getElementById("signinModal").style.display = "none"; }
+    function handleSignIn(e) { e.preventDefault(); alert("Signed in successfully (demo)."); closeSignInModal(); }
+    function subscribeNewsletter(e) { e.preventDefault(); let email = document.getElementById("newsletterEmail").value; if(email) alert(`Thank you for subscribing ${email}!`); else alert("Enter email"); }
+    
+    // close modals on click outside
+    window.onclick = function(event) { if(event.target.classList.contains('modal')) event.target.style.display = "none"; }
+    
+    // initial load
+    window.onload = () => { renderProjects(); };
+</script>
+</body>
+</html>

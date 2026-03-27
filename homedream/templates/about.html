@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Dream Home Design</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #f8f9fa;
+        }
+
+        /* Header Styles */
+        .static-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+
+        .logo span {
+            color: #ffd700;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .nav-menu a:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .signin-btn {
+            background: #ffd700;
+            color: #1e3c72;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .signin-btn:hover {
+            background: #ffed4a;
+            transform: scale(1.05);
+        }
+
+        /* User Profile Section */
+        .user-profile {
+            display: none;
+            align-items: center;
+            gap: 1rem;
+            background: rgba(255,255,255,0.15);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+        }
+
+        .user-avatar {
+            width: 38px;
+            height: 38px;
+            background: #ffd700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1e3c72;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.3;
+        }
+
+        .user-name {
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .user-email {
+            font-size: 0.7rem;
+            opacity: 0.9;
+        }
+
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.4);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 2rem;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 15px;
+            position: relative;
+            animation: slideDown 0.3s;
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 10px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 20px;
+        }
+
+        /* Hero Section */
+        .about-hero {
+            background: linear-gradient(rgba(30,60,114,0.9), rgba(42,82,152,0.9)), url('https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=2069&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 6rem 20px;
+            margin-bottom: 4rem;
+        }
+
+        .about-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s;
+        }
+
+        .about-hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+            animation: fadeInUp 1s 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Story Section */
+        .story-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-bottom: 4rem;
+            background: white;
+            padding: 3rem;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .story-content h2 {
+            font-size: 2.5rem;
+            color: #1e3c72;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .story-content h2:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: #ffd700;
+            border-radius: 2px;
+        }
+
+        .story-content p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .story-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        /* Mission Vision Section */
+        .mission-vision {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .mission-card, .vision-card {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mission-card:hover, .vision-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .mission-card:before, .vision-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #1e3c72, #ffd700);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            color: #1e3c72;
+            margin-bottom: 1.5rem;
+        }
+
+        .mission-card h3, .vision-card h3 {
+            font-size: 2rem;
+            color: #1e3c72;
+            margin-bottom: 1rem;
+        }
+
+        .mission-card p, .vision-card p {
+            color: #666;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        /* Values Section */
+        .values-section {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .values-section h2 {
+            font-size: 2.5rem;
+            color: #1e3c72;
+            margin-bottom: 1rem;
+        }
+
+        .values-section > p {
+            color: #666;
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .value-card {
+            background: white;
+            padding: 2.5rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .value-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .value-card:hover .value-icon {
+            transform: rotateY(180deg);
+            background: #ffd700;
+            color: #1e3c72;
+        }
+
+        .value-card h3 {
+            color: #1e3c72;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .value-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Timeline Section */
+        .timeline-section {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 4rem 0;
+            margin-bottom: 4rem;
+            border-radius: 50px 50px 0 0;
+        }
+
+        .timeline-section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .timeline:before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: rgba(255,255,255,0.3);
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            width: 50%;
+            padding: 0 2rem;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            text-align: left;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            top: 20px;
+            width: 20px;
+            height: 20px;
+            background: #ffd700;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-dot {
+            right: -10px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: -10px;
+        }
+
+        .timeline-content {
+            background: rgba(255,255,255,0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .timeline-year {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffd700;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-description {
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        /* Team Section */
+        .team-section {
+            margin-bottom: 4rem;
+        }
+
+        .team-section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #1e3c72;
+            margin-bottom: 1rem;
+        }
+
+        .team-section > p {
+            text-align: center;
+            color: #666;
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .team-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .team-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .team-card:hover .team-image {
+            transform: scale(1.05);
+        }
+
+        .team-info {
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .team-info h3 {
+            color: #1e3c72;
+            font-size: 1.5rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .team-info .position {
+            color: #ffd700;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .team-info .bio {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .team-social {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .team-social a {
+            width: 35px;
+            height: 35px;
+            background: #f0f0f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1e3c72;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .team-social a:hover {
+            background: #1e3c72;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: white;
+            padding: 4rem 0;
+            margin-bottom: 4rem;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 1rem;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #1e3c72;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .stat-number i {
+            font-size: 2rem;
+            color: #ffd700;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* Testimonials Section */
+        .testimonials-section {
+            margin-bottom: 4rem;
+        }
+
+        .testimonials-section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #1e3c72;
+            margin-bottom: 3rem;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .testimonial-card:before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 5rem;
+            color: #ffd700;
+            opacity: 0.3;
+            font-family: serif;
+        }
+
+        .testimonial-text {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .author-info h4 {
+            color: #1e3c72;
+            margin-bottom: 0.2rem;
+        }
+
+        .author-info p {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .testimonial-rating {
+            color: #ffd700;
+            margin-bottom: 1rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 4rem;
+            border-radius: 30px;
+            margin-bottom: 2rem;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .cta-btn {
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .cta-btn-primary {
+            background: #ffd700;
+            color: #1e3c72;
+        }
+
+        .cta-btn-primary:hover {
+            background: #ffed4a;
+            transform: scale(1.05);
+        }
+
+        .cta-btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .cta-btn-secondary:hover {
+            background: white;
+            color: #1e3c72;
+            transform: scale(1.05);
+        }
+
+        /* Footer Styles */
+        .footer {
+            background: #1a2634;
+            color: white;
+            padding: 4rem 0 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-section h3 {
+            color: #ffd700;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-section p {
+            color: #ccc;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: #ffd700;
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: white;
+            background: rgba(255,255,255,0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: #ffd700;
+            color: #1a2634;
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #ccc;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .story-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .mission-vision {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline:before {
+                left: 30px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                left: 0 !important;
+                padding-left: 60px;
+                text-align: left !important;
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-dot,
+            .timeline-item:nth-child(even) .timeline-dot {
+                left: 20px;
+                right: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+            
+            .about-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+        <!-- Header -->
+    <header class="static-header">
+        <div class="header-container">
+            <a href="/" class="logo">Dream<span>Home</span></a>
+            <nav class="nav-menu">
+                <a href="/">Home</a>
+                <a href="/projects">Projects</a>
+                <a href="/architecture">Architecture</a>
+                <a href="/about">About</a>
+                <a href="/reviews">Reviews</a>
+                <a href="/contact">Contact</a>
+            </nav>
+            <div class="auth-buttons">
+                <!-- Sign In Button (visible when not logged in) -->
+                <button id="signinBtn" class="signin-btn" onclick="openSignInModal()">
+                    <i class="fas fa-user"></i> Sign In
+                </button>
+                
+                <!-- User Profile Section (visible when logged in) -->
+                <div id="userProfile" class="user-profile">
+                    <div class="user-avatar" id="userAvatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-info">
+                        <span class="user-name" id="userName">Guest User</span>
+                        <span class="user-email" id="userEmail">user@example.com</span>
+                    </div>
+                    <button class="logout-btn" onclick="logoutUser()">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sign In Modal -->
+    <div id="signinModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeSignInModal()">&times;</span>
+            <h2><i class="fas fa-sign-in-alt"></i> Sign In</h2>
+            <form id="signinForm">
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label>Email</label>
+                    <input type="email" id="email" placeholder="Enter your email" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px;" required>
+                </div>
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label>Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px;" required>
+                </div>
+                <button type="submit" style="width: 100%; padding: 0.8rem; background: #ffd700; color: #1e3c72; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">Sign In</button>
+            </form>
+            <p style="text-align: center; margin-top: 1rem;">
+                Don't have an account? <a href="#" onclick="openRegister()">Register here</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- About Hero Section -->
+    <section class="about-hero">
+        <h1>Creating Dreams Into Reality</h1>
+        <p>For over 15 years, we've been transforming spaces into beautiful, functional homes that reflect our clients' unique personalities and aspirations.</p>
+    </section>
+
+    <!-- Our Story Section -->
+    <div class="container">
+        <div class="story-section">
+            <div class="story-content">
+                <h2>Our Story</h2>
+                <p>Founded in 2009, Dream Home Design started as a small architectural firm with a big dream - to revolutionize the way people think about home design. What began as a two-person operation in a small office has grown into one of India's most trusted names in residential architecture.</p>
+                <p>Our journey has been marked by countless successful projects, satisfied clients, and a unwavering commitment to excellence. We've had the privilege of designing homes for over 500 families, each project unique and tailored to the client's vision.</p>
+                <p>Today, we're proud to have a team of 25+ talented architects and designers who share our passion for creating beautiful, sustainable, and functional spaces. But despite our growth, we've never lost sight of what made us successful - attention to detail, personalized service, and a genuine love for what we do.</p>
+            </div>
+            <div class="story-image">
+                <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2069&q=80" alt="Our Office">
+            </div>
+        </div>
+    </div>
+
+    <!-- Mission & Vision -->
+    <div class="container">
+        <div class="mission-vision">
+            <div class="mission-card">
+                <div class="card-icon"><i class="fas fa-bullseye"></i></div>
+                <h3>Our Mission</h3>
+                <p>To create innovative, sustainable, and beautiful living spaces that enhance the quality of life for our clients. We strive to exceed expectations by combining artistic vision with practical functionality, ensuring every project reflects the unique personality and needs of those who will call it home.</p>
+            </div>
+            <div class="vision-card">
+                <div class="card-icon"><i class="fas fa-eye"></i></div>
+                <h3>Our Vision</h3>
+                <p>To be the most trusted and innovative architectural firm in India, known for pushing boundaries while maintaining the highest standards of quality and sustainability. We envision a future where every Indian family has access to thoughtfully designed, eco-friendly homes that bring joy and comfort to their lives.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Our Values -->
+    <div class="container">
+        <div class="values-section">
+            <h2>Our Core Values</h2>
+            <p>The principles that guide everything we do</p>
+            
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon"><i class="fas fa-heart"></i></div>
+                    <h3>Passion</h3>
+                    <p>We pour our hearts into every project, treating each home as if it were our own.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon"><i class="fas fa-handshake"></i></div>
+                    <h3>Integrity</h3>
+                    <p>We believe in honest, transparent dealings with our clients and partners.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon"><i class="fas fa-lightbulb"></i></div>
+                    <h3>Innovation</h3>
+                    <p>We constantly explore new ideas, materials, and technologies to improve our designs.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon"><i class="fas fa-leaf"></i></div>
+                    <h3>Sustainability</h3>
+                    <p>We're committed to eco-friendly practices and sustainable design solutions.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon"><i class="fas fa-users"></i></div>
+                    <h3>Collaboration</h3>
+                    <p>We work closely with clients, listening and adapting to bring their vision to life.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon"><i class="fas fa-medal"></i></div>
+                    <h3>Excellence</h3>
+                    <p>We never compromise on quality, striving for perfection in every detail.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Timeline Section -->
+    <section class="timeline-section">
+        <div class="container">
+            <h2>Our Journey</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2009</div>
+                        <div class="timeline-title">The Beginning</div>
+                        <div class="timeline-description">Dream Home Design founded by Arjun Mehta with just 2 employees in a small Bangalore office.</div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2012</div>
+                        <div class="timeline-title">First Major Project</div>
+                        <div class="timeline-description">Completed our first luxury villa project, gaining recognition in the industry.</div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2015</div>
+                        <div class="timeline-title">Team Expansion</div>
+                        <div class="timeline-description">Grew to 15 team members and moved to our current office space.</div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2018</div>
+                        <div class="timeline-title">First International Project</div>
+                        <div class="timeline-description">Designed our first project outside India, expanding our horizons.</div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2021</div>
+                        <div class="timeline-title">Industry Recognition</div>
+                        <div class="timeline-description">Won "Best Architecture Firm" award at the National Design Awards.</div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2024</div>
+                        <div class="timeline-title">500+ Projects</div>
+                        <div class="timeline-description">Celebrated completing over 500 successful projects with 25+ team members.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leadership Team -->
+    <div class="container">
+        <div class="team-section">
+            <h2>Our Leadership Team</h2>
+            <p>The creative minds behind our success</p>
+            
+            <div class="team-grid">
+                <div class="team-card">
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1974&q=80" alt="Arjun Mehta" class="team-image">
+                    <div class="team-info">
+                        <h3>Arjun Mehta</h3>
+                        <div class="position">Founder & Principal Architect</div>
+                        <p class="bio">With 20+ years of experience, Arjun has led the company from startup to industry leader. His vision and passion drive our success.</p>
+                        <div class="team-social">
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-card">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1976&q=80" alt="Priya Sharma" class="team-image">
+                    <div class="team-info">
+                        <h3>Priya Sharma</h3>
+                        <div class="position">Co-Founder & Design Director</div>
+                        <p class="bio">Priya's innovative design approach has earned numerous awards. She ensures every project meets our high standards of excellence.</p>
+                        <div class="team-social">
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-card">
+                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1974&q=80" alt="Vikram Singh" class="team-image">
+                    <div class="team-info">
+                        <h3>Vikram Singh</h3>
+                        <div class="position">Head of Operations</div>
+                        <p class="bio">Vikram ensures smooth project execution, managing timelines, budgets, and client relationships with expertise.</p>
+                        <div class="team-social">
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="container">
+        <div class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number"><i class="fas fa-calendar-alt"></i> 15+</div>
+                    <div class="stat-label">Years of Excellence</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number"><i class="fas fa-home"></i> 500+</div>
+                    <div class="stat-label">Homes Designed</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number"><i class="fas fa-users"></i> 25+</div>
+                    <div class="stat-label">Expert Architects</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number"><i class="fas fa-trophy"></i> 45+</div>
+                    <div class="stat-label">Design Awards</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number"><i class="fas fa-smile"></i> 1000+</div>
+                    <div class="stat-label">Happy Clients</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Client Testimonials -->
+    <div class="container">
+        <div class="testimonials-section">
+            <h2>What Our Clients Say</h2>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">Dream Home Design exceeded all our expectations. They listened carefully to our requirements and created a home that perfectly reflects our style. The team was professional, responsive, and a pleasure to work with.</p>
+                    <div class="testimonial-author">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1974&q=80" alt="Rajesh Kumar" class="author-image">
+                        <div class="author-info">
+                            <h4>Rajesh Kumar</h4>
+                            <p>Luxury Villa, Whitefield</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">The team's attention to detail is remarkable. They transformed our outdated apartment into a modern, functional space that feels twice as large. Their innovative solutions and design expertise made all the difference.</p>
+                    <div class="testimonial-author">
+                        <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1974&q=80" alt="Priya Sharma" class="author-image">
+                        <div class="author-info">
+                            <h4>Priya Sharma</h4>
+                            <p>Apartment Renovation</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">Working with Dream Home Design was a dream come true. They understood our vision for a sustainable, eco-friendly farmhouse and delivered beyond our expectations. Truly the best in the business!</p>
+                    <div class="testimonial-author">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1974&q=80" alt="Amit Mehta" class="author-image">
+                        <div class="author-info">
+                            <h4>Amit Mehta</h4>
+                            <p>Eco Farmhouse</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="container">
+        <div class="cta-section">
+            <h2>Ready to Start Your Dream Home Journey?</h2>
+            <p>Let's create something beautiful together</p>
+            <div class="cta-buttons">
+                <a href="/contact" class="cta-btn cta-btn-primary">Contact Us</a>
+                <a href="/book-now" class="cta-btn cta-btn-secondary">Book Consultation</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Dream<span style="color: #ffd700;">Home</span></h3>
+                <p>Creating beautiful, functional, and sustainable homes that reflect your unique style and needs.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/projects">Our Projects</a></li>
+                    <li><a href="/architecture">Architects</a></li>
+                    <li><a href="/about">About Us</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Services</h3>
+                <ul>
+                    <li><a href="#">Home Design</a></li>
+                    <li><a href="#">Interior Design</a></li>
+                    <li><a href="#">3D Visualization</a></li>
+                    <li><a href="#">Consultation</a></li>
+                    <li><a href="#">Renovation</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <ul>
+                    <li><i class="fas fa-phone"></i> +91 98765 43210</li>
+                    <li><i class="fas fa-envelope"></i> info@dreamhome.com</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Bangalore, India</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 Dream Home Design. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Sign In Modal Functions
+        function openSignInModal() {
+            document.getElementById('signinModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSignInModal() {
+            document.getElementById('signinModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('signinModal');
+            if (event.target == modal) {
+                closeSignInModal();
+            }
+        }
+
+        // Sign In Form Submission
+        document.getElementById('signinForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            if(email && password) {
+                alert('Sign in successful! (Demo)');
+                closeSignInModal();
+            } else {
+                alert('Please fill all fields');
+            }
+        });
+
+        // Open Register
+        function openRegister() {
+            closeSignInModal();
+            window.location.href = '/register';
+        }
+
+        // Animate numbers on scroll
+        function animateNumbers() {
+            const stats = document.querySelectorAll('.stat-number');
+            stats.forEach(stat => {
+                const text = stat.textContent;
+                const number = parseInt(text.match(/\d+/)[0]);
+                const icon = stat.querySelector('i') ? stat.querySelector('i').outerHTML : '';
+                let current = 0;
+                const increment = number / 50;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= number) {
+                        stat.innerHTML = icon + ' ' + number + '+';
+                        clearInterval(timer);
+                    } else {
+                        stat.innerHTML = icon + ' ' + Math.floor(current) + '+';
+                    }
+                }, 30);
+            });
+        }
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.2
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                    
+                    // Animate stats if they're in view
+                    if (entry.target.classList.contains('stats-section')) {
+                        animateNumbers();
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements
+        document.querySelectorAll('.story-section, .mission-card, .vision-card, .value-card, .timeline-item, .team-card, .stats-section, .testimonial-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Add active class to current navigation
+        const currentLocation = window.location.pathname;
+        const navLinks = document.querySelectorAll('.nav-menu a');
+        
+        navLinks.forEach(link => {
+            if(link.getAttribute('href') === currentLocation) {
+                link.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>

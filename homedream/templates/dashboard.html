@@ -1,0 +1,1123 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dashboard - DreamHome</title>
+        
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        
+        <!-- AOS Animation Library -->
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+        
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: 'Poppins', sans-serif;
+            }
+            
+            body {
+                background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+                min-height: 100vh;
+                position: relative;
+                overflow-x: hidden;
+            }
+            
+            /* Animated Background */
+            .animated-bg {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+                overflow: hidden;
+            }
+            
+            .animated-bg span {
+                position: absolute;
+                display: block;
+                width: 20px;
+                height: 20px;
+                background: rgba(255, 255, 255, 0.3);
+                border-radius: 50%;
+                animation: animate 25s linear infinite;
+                bottom: -150px;
+            }
+            
+            .animated-bg span:nth-child(1) {
+                left: 25%;
+                width: 80px;
+                height: 80px;
+                animation-delay: 0s;
+                background: rgba(102, 126, 234, 0.2);
+            }
+            
+            .animated-bg span:nth-child(2) {
+                left: 10%;
+                width: 40px;
+                height: 40px;
+                animation-delay: 2s;
+                animation-duration: 12s;
+                background: rgba(118, 75, 162, 0.2);
+            }
+            
+            .animated-bg span:nth-child(3) {
+                left: 70%;
+                width: 60px;
+                height: 60px;
+                animation-delay: 4s;
+                background: rgba(102, 126, 234, 0.2);
+            }
+            
+            .animated-bg span:nth-child(4) {
+                left: 40%;
+                width: 100px;
+                height: 100px;
+                animation-delay: 0s;
+                animation-duration: 18s;
+                background: rgba(118, 75, 162, 0.1);
+            }
+            
+            .animated-bg span:nth-child(5) {
+                left: 65%;
+                width: 50px;
+                height: 50px;
+                animation-delay: 0s;
+                background: rgba(102, 126, 234, 0.2);
+            }
+            
+            .animated-bg span:nth-child(6) {
+                left: 85%;
+                width: 70px;
+                height: 70px;
+                animation-delay: 3s;
+                background: rgba(118, 75, 162, 0.2);
+            }
+            
+            .animated-bg span:nth-child(7) {
+                left: 15%;
+                width: 90px;
+                height: 90px;
+                animation-delay: 7s;
+                background: rgba(102, 126, 234, 0.2);
+            }
+            
+            @keyframes animate {
+                0% {
+                    transform: translateY(0) rotate(0deg);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateY(-1000px) rotate(720deg);
+                    opacity: 0;
+                }
+            }
+            
+            /* Modern Navbar */
+            .navbar {
+                background: rgba(255, 255, 255, 0.9) !important;
+                backdrop-filter: blur(10px);
+                box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+                padding: 15px 0;
+                border-bottom: 1px solid rgba(255,255,255,0.3);
+            }
+            
+            .navbar-brand {
+                font-size: 28px;
+                font-weight: 800;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                letter-spacing: -0.5px;
+            }
+            
+            .navbar-brand i {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                margin-right: 10px;
+            }
+            
+            /* User Dropdown */
+            .user-dropdown {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                padding: 8px 20px;
+                background: white;
+                border-radius: 60px;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+                cursor: pointer;
+                transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                border: 2px solid transparent;
+            }
+            
+            .user-dropdown:hover {
+                box-shadow: 0 15px 35px rgba(102,126,234,0.2);
+                transform: translateY(-3px) scale(1.02);
+                border-color: #667eea;
+            }
+            
+            .user-avatar {
+                width: 45px;
+                height: 45px;
+                border-radius: 50%;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                font-weight: 700;
+                font-size: 20px;
+                box-shadow: 0 5px 15px rgba(102,126,234,0.3);
+                transition: all 0.3s;
+            }
+            
+            .user-dropdown:hover .user-avatar {
+                transform: rotate(360deg);
+            }
+            
+            .user-info {
+                line-height: 1.3;
+            }
+            
+            .user-name {
+                font-weight: 700;
+                color: #1a1a2c;
+                font-size: 16px;
+            }
+            
+            .user-email {
+                font-size: 12px;
+                color: #6c757d;
+            }
+            
+            .dropdown-menu {
+                border: none;
+                border-radius: 20px;
+                box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+                padding: 10px;
+                margin-top: 15px !important;
+                border: 1px solid rgba(255,255,255,0.1);
+                backdrop-filter: blur(10px);
+                background: rgba(255, 255, 255, 0.95);
+            }
+            
+            .dropdown-item {
+                border-radius: 12px;
+                padding: 12px 20px;
+                font-weight: 500;
+                transition: all 0.3s;
+                color: #1a1a2c;
+            }
+            
+            .dropdown-item i {
+                width: 25px;
+                color: #667eea;
+                font-size: 16px;
+            }
+            
+            .dropdown-item:hover {
+                background: linear-gradient(135deg, #667eea10 0%, #764ba210 100%);
+                transform: translateX(5px);
+            }
+            
+            .dropdown-item.text-danger i {
+                color: #dc3545;
+            }
+            
+            .dropdown-item.text-danger:hover {
+                background: linear-gradient(135deg, #dc354510 0%, #c8233310 100%);
+            }
+            
+            .dropdown-divider {
+                margin: 8px 0;
+                border-top: 1px solid rgba(0,0,0,0.05);
+            }
+            
+            /* Welcome Banner */
+            .welcome-banner {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                border-radius: 35px;
+                padding: 45px;
+                margin: 30px 0;
+                position: relative;
+                overflow: hidden;
+                box-shadow: 0 25px 50px rgba(102,126,234,0.3);
+                animation: slideInUp 1s ease-out;
+            }
+            
+            @keyframes slideInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(50px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            .welcome-banner::before {
+                content: '';
+                position: absolute;
+                top: -50%;
+                right: -10%;
+                width: 400px;
+                height: 400px;
+                background: rgba(255,255,255,0.1);
+                border-radius: 50%;
+                animation: floatBubble 8s ease-in-out infinite;
+            }
+            
+            .welcome-banner::after {
+                content: '';
+                position: absolute;
+                bottom: -30%;
+                left: -5%;
+                width: 350px;
+                height: 350px;
+                background: rgba(255,255,255,0.1);
+                border-radius: 50%;
+                animation: floatBubble 10s ease-in-out infinite reverse;
+            }
+            
+            @keyframes floatBubble {
+                0%, 100% { transform: translate(0, 0) rotate(0deg); }
+                50% { transform: translate(30px, -30px) rotate(15deg); }
+            }
+            
+            .welcome-content {
+                position: relative;
+                z-index: 1;
+                color: white;
+            }
+            
+            .welcome-title {
+                font-size: 42px;
+                font-weight: 800;
+                margin-bottom: 15px;
+                line-height: 1.2;
+                animation: fadeInLeft 1s ease-out 0.3s both;
+            }
+            
+            .welcome-subtitle {
+                font-size: 18px;
+                opacity: 0.9;
+                margin-bottom: 10px;
+                animation: fadeInLeft 1s ease-out 0.5s both;
+            }
+            
+            @keyframes fadeInLeft {
+                from {
+                    opacity: 0;
+                    transform: translateX(-30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+            
+            .welcome-icon {
+                font-size: 150px;
+                opacity: 0.2;
+                position: absolute;
+                bottom: -20px;
+                right: 20px;
+                transform: rotate(10deg);
+                animation: floatIcon 6s ease-in-out infinite;
+            }
+            
+            @keyframes floatIcon {
+                0%, 100% { transform: rotate(10deg) translateY(0); }
+                50% { transform: rotate(10deg) translateY(-20px); }
+            }
+            
+            /* Stat Cards */
+            .stat-card {
+                background: white;
+                border-radius: 25px;
+                padding: 30px;
+                box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+                transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                position: relative;
+                overflow: hidden;
+                border: 1px solid rgba(255,255,255,0.2);
+                backdrop-filter: blur(10px);
+                margin-bottom: 25px;
+                animation: fadeInUp 0.8s ease-out;
+            }
+            
+            .stat-card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: linear-gradient(135deg, #667eea05 0%, #764ba205 100%);
+                opacity: 0;
+                transition: opacity 0.5s;
+            }
+            
+            .stat-card:hover {
+                transform: translateY(-15px) scale(1.02);
+                box-shadow: 0 30px 60px rgba(102,126,234,0.2);
+            }
+            
+            .stat-card:hover::before {
+                opacity: 1;
+            }
+            
+            .stat-icon-wrapper {
+                width: 70px;
+                height: 70px;
+                border-radius: 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 25px;
+                font-size: 28px;
+                transition: all 0.5s;
+                position: relative;
+                z-index: 1;
+            }
+            
+            .stat-card:hover .stat-icon-wrapper {
+                transform: scale(1.1) rotate(5deg);
+            }
+            
+            .stat-icon-wrapper.blue {
+                background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%);
+                color: #667eea;
+            }
+            
+            .stat-icon-wrapper.green {
+                background: linear-gradient(135deg, #10b98120 0%, #05966920 100%);
+                color: #10b981;
+            }
+            
+            .stat-icon-wrapper.purple {
+                background: linear-gradient(135deg, #8b5cf620 0%, #6d28d920 100%);
+                color: #8b5cf6;
+            }
+            
+            .stat-icon-wrapper.red {
+                background: linear-gradient(135deg, #ef444420 0%, #dc262620 100%);
+                color: #ef4444;
+            }
+            
+            .stat-value {
+                font-size: 42px;
+                font-weight: 800;
+                color: #1a1a2c;
+                margin-bottom: 5px;
+                line-height: 1;
+                position: relative;
+                z-index: 1;
+            }
+            
+            .stat-label {
+                color: #6c757d;
+                font-size: 15px;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                margin-bottom: 10px;
+            }
+            
+            .stat-trend {
+                display: inline-flex;
+                align-items: center;
+                gap: 5px;
+                padding: 5px 15px;
+                border-radius: 50px;
+                font-size: 13px;
+                font-weight: 600;
+                background: #f8f9fc;
+            }
+            
+            .stat-trend.up {
+                color: #10b981;
+            }
+            
+            .stat-trend.down {
+                color: #ef4444;
+            }
+            
+            /* Activity Card */
+            .activity-card {
+                background: white;
+                border-radius: 25px;
+                padding: 30px;
+                box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+                border: 1px solid rgba(255,255,255,0.2);
+                backdrop-filter: blur(10px);
+                height: 100%;
+                animation: fadeInUp 0.8s ease-out 0.2s both;
+            }
+            
+            .activity-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 25px;
+            }
+            
+            .activity-title {
+                font-size: 22px;
+                font-weight: 700;
+                color: #1a1a2c;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .activity-title i {
+                color: #667eea;
+                font-size: 24px;
+            }
+            
+            .activity-item {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                padding: 20px;
+                border-radius: 20px;
+                transition: all 0.4s;
+                cursor: pointer;
+                margin-bottom: 5px;
+                border: 1px solid transparent;
+            }
+            
+            .activity-item:hover {
+                background: linear-gradient(135deg, #667eea08 0%, #764ba208 100%);
+                transform: translateX(10px) scale(1.02);
+                border-color: #667eea20;
+            }
+            
+            .activity-icon {
+                width: 55px;
+                height: 55px;
+                border-radius: 18px;
+                background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #667eea;
+                font-size: 22px;
+                transition: all 0.4s;
+            }
+            
+            .activity-item:hover .activity-icon {
+                transform: rotate(360deg) scale(1.1);
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+            }
+            
+            .activity-content {
+                flex: 1;
+            }
+            
+            .activity-name {
+                font-weight: 700;
+                color: #1a1a2c;
+                margin-bottom: 5px;
+                font-size: 16px;
+            }
+            
+            .activity-meta {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                font-size: 13px;
+                color: #6c757d;
+            }
+            
+            .activity-meta i {
+                font-size: 12px;
+                margin-right: 3px;
+            }
+            
+            .activity-badge {
+                padding: 6px 15px;
+                border-radius: 50px;
+                font-size: 12px;
+                font-weight: 600;
+                letter-spacing: 0.5px;
+            }
+            
+            .badge-pending {
+                background: #fef3c7;
+                color: #d97706;
+            }
+            
+            .badge-confirmed {
+                background: #d1fae5;
+                color: #059669;
+            }
+            
+            .badge-cancelled {
+                background: #fee2e2;
+                color: #dc2626;
+            }
+            
+            /* Profile Card */
+            .profile-card {
+                background: white;
+                border-radius: 25px;
+                padding: 30px;
+                box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+                border: 1px solid rgba(255,255,255,0.2);
+                backdrop-filter: blur(10px);
+                height: 100%;
+                animation: fadeInUp 0.8s ease-out 0.3s both;
+            }
+            
+            .profile-header {
+                text-align: center;
+                margin-bottom: 25px;
+            }
+            
+            .profile-avatar-large {
+                width: 120px;
+                height: 120px;
+                border-radius: 50%;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 20px;
+                color: white;
+                font-size: 48px;
+                font-weight: 700;
+                border: 5px solid white;
+                box-shadow: 0 15px 40px rgba(102,126,234,0.3);
+                animation: pulse 2s infinite;
+            }
+            
+            @keyframes pulse {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+            }
+            
+            .profile-name-large {
+                font-size: 24px;
+                font-weight: 800;
+                color: #1a1a2c;
+                margin-bottom: 5px;
+            }
+            
+            .profile-email-large {
+                color: #6c757d;
+                font-size: 15px;
+                margin-bottom: 20px;
+            }
+            
+            .profile-stats {
+                display: flex;
+                justify-content: space-around;
+                padding: 20px 0;
+                border-top: 1px solid #f0f0f0;
+                border-bottom: 1px solid #f0f0f0;
+                margin-bottom: 20px;
+            }
+            
+            .profile-stat-item {
+                text-align: center;
+            }
+            
+            .profile-stat-value {
+                font-size: 24px;
+                font-weight: 800;
+                color: #667eea;
+            }
+            
+            .profile-stat-label {
+                font-size: 12px;
+                color: #6c757d;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+            
+            .profile-info-item {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                padding: 12px 0;
+            }
+            
+            .profile-info-icon {
+                width: 40px;
+                height: 40px;
+                border-radius: 12px;
+                background: linear-gradient(135deg, #667eea10 0%, #764ba210 100%);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #667eea;
+                font-size: 18px;
+            }
+            
+            .profile-info-content {
+                flex: 1;
+            }
+            
+            .profile-info-label {
+                font-size: 12px;
+                color: #6c757d;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                margin-bottom: 2px;
+            }
+            
+            .profile-info-value {
+                font-weight: 700;
+                color: #1a1a2c;
+            }
+            
+            /* Quick Actions */
+            .quick-actions {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+                margin-top: 25px;
+            }
+            
+            .quick-action-btn {
+                padding: 20px;
+                border-radius: 20px;
+                background: linear-gradient(135deg, #667eea08 0%, #764ba208 100%);
+                color: #667eea;
+                text-align: center;
+                text-decoration: none;
+                transition: all 0.4s;
+                border: 1px solid #667eea20;
+            }
+            
+            .quick-action-btn:hover {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                transform: translateY(-5px);
+                box-shadow: 0 15px 30px rgba(102,126,234,0.3);
+                text-decoration: none;
+            }
+            
+            .quick-action-btn i {
+                font-size: 24px;
+                margin-bottom: 10px;
+                display: block;
+            }
+            
+            .quick-action-btn span {
+                font-size: 13px;
+                font-weight: 600;
+            }
+            
+            /* Loading Animation */
+            .loading {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 9999;
+                transition: opacity 0.8s, visibility 0.8s;
+            }
+            
+            .loading.hidden {
+                opacity: 0;
+                visibility: hidden;
+            }
+            
+            .loader {
+                width: 60px;
+                height: 60px;
+                border: 5px solid rgba(255,255,255,0.2);
+                border-top: 5px solid white;
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+            }
+            
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+            
+            /* Alerts */
+            .alert {
+                border-radius: 20px;
+                border: none;
+                padding: 15px 25px;
+                margin-top: 20px;
+                animation: slideInUp 0.5s;
+            }
+            
+            /* Responsive */
+            @media (max-width: 768px) {
+                .welcome-title {
+                    font-size: 28px;
+                }
+                
+                .welcome-icon {
+                    font-size: 100px;
+                }
+                
+                .stat-card {
+                    padding: 20px;
+                }
+                
+                .stat-value {
+                    font-size: 32px;
+                }
+                
+                .quick-actions {
+                    grid-template-columns: 1fr;
+                }
+                
+                .user-dropdown {
+                    padding: 5px 12px;
+                }
+                
+                .user-email {
+                    display: none;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Animated Background -->
+        <div class="animated-bg">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <!-- Loading Animation -->
+        <div class="loading" id="loading">
+            <div class="loader"></div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand fw-bold" href="{{ url_for('index') }}">
+                    <i class="fas fa-home"></i> DreamHome
+                </a>
+                
+                <div class="dropdown">
+                    <div class="user-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="user-avatar">
+                            {{ user.first_name[0] }}{{ user.last_name[0] }}
+                        </div>
+                        <div class="user-info">
+                            <div class="user-name">{{ user.first_name }} {{ user.last_name }}</div>
+                            <div class="user-email">{{ user.email }}</div>
+                        </div>
+                        <i class="fas fa-chevron-down text-muted"></i>
+                    </div>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>My Profile</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-calendar-check me-2"></i>My Bookings</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-heart me-2"></i>Saved Designs</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item text-danger" href="{{ url_for('logout') }}">
+                                <i class="fas fa-sign-out-alt me-2"></i>Logout
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="container mt-4">
+            <!-- Welcome Banner -->
+            <div class="welcome-banner" data-aos="fade-up">
+                <div class="welcome-content">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h1 class="welcome-title">
+                                <i class="fas fa-hand-wave me-3"></i>
+                                Welcome back, {{ user.first_name }}!
+                            </h1>
+                            <p class="welcome-subtitle">
+                                <i class="far fa-calendar-alt me-2"></i>
+                                {{ datetime.now().strftime('%A, %B %d, %Y') }}
+                            </p>
+                            <p class="welcome-subtitle">
+                                <i class="fas fa-clock me-2"></i>
+                                {{ datetime.now().strftime('%I:%M %p') }}
+                            </p>
+                        </div>
+                        <div class="col-md-4 text-md-end">
+                            <i class="fas fa-home welcome-icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="row">
+                <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="stat-card">
+                        <div class="stat-icon-wrapper blue">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="stat-value">{{ stats.total_bookings }}</div>
+                        <div class="stat-label">Total Bookings</div>
+                        <div class="stat-trend up">
+                            <i class="fas fa-arrow-up"></i> 12%
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="stat-card">
+                        <div class="stat-icon-wrapper green">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-value">{{ stats.confirmed_bookings }}</div>
+                        <div class="stat-label">Confirmed</div>
+                        <div class="stat-trend up">
+                            <i class="fas fa-arrow-up"></i> 8%
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="stat-card">
+                        <div class="stat-icon-wrapper purple">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-value">{{ stats.pending_bookings }}</div>
+                        <div class="stat-label">Pending</div>
+                        <div class="stat-trend up">
+                            <i class="fas fa-clock"></i> 3 awaiting
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                    <div class="stat-card">
+                        <div class="stat-icon-wrapper red">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="stat-value">{{ stats.total_saved }}</div>
+                        <div class="stat-label">Saved Designs</div>
+                        <div class="stat-trend down">
+                            <i class="fas fa-arrow-down"></i> 2%
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Recent Activity -->
+                <div class="col-lg-8" data-aos="fade-up" data-aos-delay="500">
+                    <div class="activity-card">
+                        <div class="activity-header">
+                            <div class="activity-title">
+                                <i class="fas fa-history"></i>
+                                Recent Activity
+                            </div>
+                            <a href="#" class="btn btn-sm btn-outline-primary rounded-pill px-4">View All</a>
+                        </div>
+                        
+                        {% if bookings %}
+                            {% for booking in bookings[:5] %}
+                            <div class="activity-item">
+                                <div class="activity-icon">
+                                    <i class="fas fa-home"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <div class="activity-name">{{ booking.project.title }}</div>
+                                    <div class="activity-meta">
+                                        <span><i class="far fa-calendar me-1"></i>{{ booking.created_at.strftime('%d %b, %Y') }}</span>
+                                        <span><i class="far fa-clock me-1"></i>{{ booking.created_at.strftime('%I:%M %p') }}</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <span class="activity-badge badge-{{ booking.status }}">
+                                        {{ booking.status|upper }}
+                                    </span>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="text-center py-5">
+                                <i class="fas fa-calendar-times fa-5x text-muted mb-4"></i>
+                                <h5 class="fw-bold">No Recent Activity</h5>
+                                <p class="text-muted mb-4">Your bookings and activities will appear here</p>
+                                <a href="{{ url_for('projects') }}" class="btn btn-primary rounded-pill px-5 py-3">
+                                    <i class="fas fa-search me-2"></i>Browse Projects
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <!-- Profile Card -->
+                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="600">
+                    <div class="profile-card">
+                        <div class="profile-header">
+                            <div class="profile-avatar-large">
+                                {{ user.first_name[0] }}{{ user.last_name[0] }}
+                            </div>
+                            <h4 class="profile-name-large">{{ user.first_name }} {{ user.last_name }}</h4>
+                            <p class="profile-email-large">{{ user.email }}</p>
+                        </div>
+                        
+                        <div class="profile-stats">
+                            <div class="profile-stat-item">
+                                <div class="profile-stat-value">{{ stats.total_bookings }}</div>
+                                <div class="profile-stat-label">Bookings</div>
+                            </div>
+                            <div class="profile-stat-item">
+                                <div class="profile-stat-value">{{ stats.total_saved }}</div>
+                                <div class="profile-stat-label">Saved</div>
+                            </div>
+                            <div class="profile-stat-item">
+                                <div class="profile-stat-value">{{ user.id }}</div>
+                                <div class="profile-stat-label">User ID</div>
+                            </div>
+                        </div>
+                        
+                        <div class="profile-info">
+                            <div class="profile-info-item">
+                                <div class="profile-info-icon">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="profile-info-content">
+                                    <div class="profile-info-label">Username</div>
+                                    <div class="profile-info-value">{{ user.username }}</div>
+                                </div>
+                            </div>
+                            
+                            <div class="profile-info-item">
+                                <div class="profile-info-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div class="profile-info-content">
+                                    <div class="profile-info-label">Phone</div>
+                                    <div class="profile-info-value">{{ user.phone or 'Not provided' }}</div>
+                                </div>
+                            </div>
+                            
+                            <div class="profile-info-item">
+                                <div class="profile-info-icon">
+                                    <i class="fas fa-calendar"></i>
+                                </div>
+                                <div class="profile-info-content">
+                                    <div class="profile-info-label">Member Since</div>
+                                    <div class="profile-info-value">{{ user.created_at.strftime('%B %Y') }}</div>
+                                </div>
+                            </div>
+                            
+                            <div class="profile-info-item">
+                                <div class="profile-info-icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <div class="profile-info-content">
+                                    <div class="profile-info-label">Account Type</div>
+                                    <div class="profile-info-value">
+                                        {% if user.is_admin %}
+                                            <span class="badge bg-primary rounded-pill px-3 py-2">Administrator</span>
+                                        {% else %}
+                                            <span class="badge bg-secondary rounded-pill px-3 py-2">Member</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Quick Actions -->
+                        <div class="quick-actions">
+                            <a href="{{ url_for('book_now') }}" class="quick-action-btn">
+                                <i class="fas fa-calendar-plus"></i>
+                                <span>Book Now</span>
+                            </a>
+                            <a href="{{ url_for('projects') }}" class="quick-action-btn">
+                                <i class="fas fa-search"></i>
+                                <span>Explore</span>
+                            </a>
+                            <a href="#" class="quick-action-btn">
+                                <i class="fas fa-heart"></i>
+                                <span>Favorites</span>
+                            </a>
+                            <a href="#" class="quick-action-btn">
+                                <i class="fas fa-cog"></i>
+                                <span>Settings</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                            <i class="fas fa-{{ 'check-circle' if category == 'success' else 'exclamation-circle' }} me-2"></i>
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        <!-- Scripts -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        
+        <script>
+            // Initialize AOS
+            AOS.init({
+                duration: 800,
+                once: true,
+                offset: 50
+            });
+            
+            // Hide loading animation
+            window.addEventListener('load', function() {
+                setTimeout(function() {
+                    document.getElementById('loading').classList.add('hidden');
+                }, 800);
+            });
+            
+            // Auto-hide alerts after 5 seconds
+            setTimeout(function() {
+                document.querySelectorAll('.alert').forEach(function(alert) {
+                    alert.classList.remove('show');
+                    setTimeout(() => alert.remove(), 300);
+                });
+            }, 5000);
+        </script>
+    </body>
+    </html>

@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Your Dream Home - Dream Home Design</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #f8f9fa;
+        }
+
+        /* Header Styles */
+        .static-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+
+        .logo span {
+            color: #ffd700;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .nav-menu a:hover, .nav-menu a.active {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .signin-btn {
+            background: #ffd700;
+            color: #1e3c72;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .signin-btn:hover {
+            background: #ffed4a;
+            transform: scale(1.05);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 2rem;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 15px;
+            position: relative;
+            animation: slideDown 0.3s;
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 10px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 20px;
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: #1e3c72;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            color: #666;
+            font-size: 1.2rem;
+        }
+
+        /* Booking Grid */
+        .booking-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        /* Booking Form */
+        .booking-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .form-section {
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .form-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #1e3c72;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title i {
+            color: #ffd700;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group label i {
+            color: #1e3c72;
+            margin-right: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #1e3c72;
+            box-shadow: 0 0 0 3px rgba(30,60,114,0.1);
+        }
+
+        /* Room Size Slider */
+        .size-slider {
+            margin-top: 1rem;
+        }
+
+        .size-slider input {
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+
+        .size-value {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #1e3c72;
+            font-weight: bold;
+        }
+
+        /* Color Options */
+        .color-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .color-option {
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .color-option input[type="radio"] {
+            display: none;
+        }
+
+        .color-box {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin: 0 auto 0.5rem;
+            border: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .color-option input[type="radio"]:checked + .color-box {
+            border-color: #1e3c72;
+            transform: scale(1.1);
+        }
+
+        .color-name {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Budget Slider */
+        .budget-slider {
+            margin-top: 1rem;
+        }
+
+        .budget-slider input {
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+
+        .budget-value {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #1e3c72;
+            font-weight: bold;
+        }
+
+        /* Facilities Grid */
+        .facilities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .facility-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .facility-item:hover {
+            background: #f0f0f0;
+        }
+
+        .facility-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .facility-item label {
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .facility-price {
+            color: #1e3c72;
+            font-weight: bold;
+        }
+
+        /* Summary Card */
+        .summary-card {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 100px;
+        }
+
+        .summary-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #ffd700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .project-preview {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .project-preview img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .project-preview h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .project-preview p {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .price-breakdown {
+            margin-bottom: 2rem;
+        }
+
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .price-item.total {
+            border-bottom: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ffd700;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: #ffd700;
+            color: #1e3c72;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .submit-btn:hover {
+            background: #ffed4a;
+            transform: scale(1.02);
+        }
+
+        /* Success Modal */
+        .success-modal {
+            display: none;
+            position: fixed;
+            z-index: 3000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            animation: fadeIn 0.3s;
+        }
+
+        .success-content {
+            background: white;
+            margin: 10% auto;
+            padding: 3rem;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 15px;
+            text-align: center;
+            animation: slideDown 0.3s;
+        }
+
+        .success-content i {
+            font-size: 5rem;
+            color: #4CAF50;
+            margin-bottom: 1rem;
+        }
+
+        .success-content h2 {
+            color: #1e3c72;
+            margin-bottom: 1rem;
+        }
+
+        .success-content p {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .success-btn {
+            background: #1e3c72;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .success-btn:hover {
+            background: #2a5298;
+        }
+
+        /* Footer Styles */
+        .footer {
+            background: #1a2634;
+            color: white;
+            padding: 4rem 0 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-section h3 {
+            color: #ffd700;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-section p {
+            color: #ccc;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: #ffd700;
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: white;
+            background: rgba(255,255,255,0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: #ffd700;
+            color: #1a2634;
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #ccc;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .booking-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .summary-card {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="static-header">
+        <div class="header-container">
+            <a href="/" class="logo">Dream<span>Home</span></a>
+            <nav class="nav-menu">
+                <a href="/">Home</a>
+                <a href="/projects">Projects</a>
+                <a href="/architecture">Architecture</a>
+                <a href="/about">About</a>
+                <a href="/reviews">Reviews</a>
+                <a href="/contact">Contact</a>
+            </nav>
+            <div class="auth-buttons">
+                <button class="signin-btn" onclick="openSignInModal()">
+                    <i class="fas fa-user"></i> Sign In
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sign In Modal -->
+    <div id="signinModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeSignInModal()">&times;</span>
+            <h2><i class="fas fa-sign-in-alt"></i> Sign In</h2>
+            <form id="signinForm">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" style="width: 100%; padding: 0.8rem; background: #ffd700; color: #1e3c72; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">Sign In</button>
+            </form>
+            <p style="text-align: center; margin-top: 1rem;">
+                Don't have an account? <a href="#" onclick="openRegister()">Register here</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="success-modal">
+        <div class="success-content">
+            <i class="fas fa-check-circle"></i>
+            <h2>Booking Successful!</h2>
+            <p>Your booking has been confirmed. We will contact you shortly with more details.</p>
+            <button class="success-btn" onclick="window.location.href='/'">Go to Homepage</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>Book Your Dream Home</h1>
+            <p>Customize your home with our premium options and facilities</p>
+        </div>
+
+        <!-- Booking Grid -->
+        <div class="booking-grid">
+            <!-- Booking Form -->
+            <div class="booking-form">
+                <form id="bookingForm" onsubmit="submitBooking(event)">
+                    <!-- Personal Information -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            <i class="fas fa-user"></i>
+                            <span>Personal Information</span>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label><i class="fas fa-user"></i> First Name</label>
+                                <input type="text" id="firstName" placeholder="Enter first name" required>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-user"></i> Last Name</label>
+                                <input type="text" id="lastName" placeholder="Enter last name" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label><i class="fas fa-envelope"></i> Email</label>
+                                <input type="email" id="email" placeholder="Enter email" required>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-phone"></i> Phone</label>
+                                <input type="tel" id="phone" placeholder="Enter phone number" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label><i class="fas fa-map-marker-alt"></i> Address</label>
+                            <textarea id="address" rows="3" placeholder="Enter your address" required></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Project Selection -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            <i class="fas fa-home"></i>
+                            <span>Select Project</span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label><i class="fas fa-building"></i> Choose Project</label>
+                            <select id="project" onchange="updateProjectDetails()" required>
+                                <option value="">Select a project</option>
+                                <option value="1" data-price="25000000">Modern Luxury Villa - ₹2.5 Cr</option>
+                                <option value="2" data-price="38000000">Luxury Farmhouse - ₹3.8 Cr</option>
+                                <option value="3" data-price="12000000">Modern Apartment - ₹1.2 Cr</option>
+                                <option value="4" data-price="42000000">Luxury Penthouse - ₹4.2 Cr</option>
+                                <option value="5" data-price="7500000">Cozy Cottage - ₹75 Lakhs</option>
+                                <option value="6" data-price="21000000">Mediterranean Villa - ₹2.1 Cr</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Room Configuration -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            <i class="fas fa-ruler-combined"></i>
+                            <span>Room Configuration</span>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label><i class="fas fa-bed"></i> Bedrooms</label>
+                                <select id="bedrooms" onchange="updatePrice()" required>
+                                    <option value="1">1 BHK</option>
+                                    <option value="2">2 BHK</option>
+                                    <option value="3" selected>3 BHK</option>
+                                    <option value="4">4 BHK</option>
+                                    <option value="5">5+ BHK</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label><i class="fas fa-bath"></i> Bathrooms</label>
+                                <select id="bathrooms" onchange="updatePrice()" required>
+                                    <option value="1">1 Bathroom</option>
+                                    <option value="2">2 Bathrooms</option>
+                                    <option value="3" selected>3 Bathrooms</option>
+                                    <option value="4">4 Bathrooms</option>
+                                    <option value="5">5+ Bathrooms</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label><i class="fas fa-arrows-alt"></i> Room Size (sq ft)</label>
+                            <div class="size-slider">
+                                <input type="range" id="roomSize" min="1000" max="5000" value="2500" step="100" oninput="updateSizeValue()">
+                                <div class="size-value"><span id="sizeDisplay">2500</span> sq ft</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Color Theme -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            <i class="fas fa-palette"></i>
+                            <span>Color Theme</span>
+                        </div>
+                        
+                        <div class="color-options">
+                            <div class="color-option">
+                                <input type="radio" name="color" id="colorNeutral" value="neutral" checked>
+                                <div class="color-box" style="background: #f5f5f5;"></div>
+                                <span class="color-name">Neutral</span>
+                            </div>
+                            
+                            <div class="color-option">
+                                <input type="radio" name="color" id="colorWarm" value="warm">
+                                <div class="color-box" style="background: #ffd700;"></div>
+                                <span class="color-name">Warm Gold</span>
+                            </div>
+                            
+                            <div class="color-option">
+                                <input type="radio" name="color" id="colorCool" value="cool">
+                                <div class="color-box" style="background: #1e3c72;"></div>
+                                <span class="color-name">Cool Blue</span>
+                            </div>
+                            
+                            <div class="color-option">
+                                <input type="radio" name="color" id="colorModern" value="modern">
+                                <div class="color-box" style="background: #808080;"></div>
+                                <span class="color-name">Modern Grey</span>
+                            </div>
+                            
+                            <div class="color-option">
+                                <input type="radio" name="color" id="colorNatural" value="natural">
+                                <div class="color-box" style="background: #8B4513;"></div>
+                                <span class="color-name">Natural Wood</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Budget Range -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            <i class="fas fa-rupee-sign"></i>
+                            <span>Budget Range</span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Your Budget</label>
+                            <div class="budget-slider">
+                                <input type="range" id="budget" min="5000000" max="100000000" value="25000000" step="1000000" oninput="updateBudgetValue()">
+                                <div class="budget-value">₹ <span id="budgetDisplay">2.5</span> Cr</div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label><i class="fas fa-credit-card"></i> Payment Mode</label>
+                            <select id="paymentMode">
+                                <option value="full">Full Payment</option>
+                                <option value="loan">Home Loan</option>
+                                <option value="emi">EMI</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Additional Facilities -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            <i class="fas fa-star"></i>
+                            <span>Additional Facilities</span>
+                        </div>
+                        
+                        <div class="facilities-grid">
+                            <div class="facility-item">
+                                <input type="checkbox" id="facilityPool" value="pool" onchange="updatePrice()">
+                                <label for="facilityPool">Swimming Pool</label>
+                                <span class="facility-price">+₹15L</span>
+                            </div>
+                            
+                            <div class="facility-item">
+                                <input type="checkbox" id="facilityGym" value="gym" onchange="updatePrice()">
+                                <label for="facilityGym">Gymnasium</label>
+                                <span class="facility-price">+₹5L</span>
+                            </div>
+                            
+                            <div class="facility-item">
+                                <input type="checkbox" id="facilityGarden" value="garden" onchange="updatePrice()">
+                                <label for="facilityGarden">Landscaped Garden</label>
+                                <span class="facility-price">+₹8L</span>
+                            </div>
+                            
+                            <div class="facility-item">
+                                <input type="checkbox" id="facilitySmart" value="smart" onchange="updatePrice()">
+                                <label for="facilitySmart">Smart Home System</label>
+                                <span class="facility-price">+₹10L</span>
+                            </div>
+                            
+                            <div class="facility-item">
+                                <input type="checkbox" id="facilityParking" value="parking" onchange="updatePrice()">
+                                <label for="facilityParking">Extra Parking</label>
+                                <span class="facility-price">+₹3L</span>
+                            </div>
+                            
+                            <div class="facility-item">
+                                <input type="checkbox" id="facilitySecurity" value="security" onchange="updatePrice()">
+                                <label for="facilitySecurity">Advanced Security</label>
+                                <span class="facility-price">+₹4L</span>
+                            </div>
+                            
+                            <div class="facility-item">
+                                <input type="checkbox" id="facilityFurniture" value="furniture" onchange="updatePrice()">
+                                <label for="facilityFurniture">Furniture Package</label>
+                                <span class="facility-price">+₹12L</span>
+                            </div>
+                            
+                            <div class="facility-item">
+                                <input type="checkbox" id="facilityAC" value="ac" onchange="updatePrice()">
+                                <label for="facilityAC">Central AC</label>
+                                <span class="facility-price">+₹7L</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Special Requests -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            <i class="fas fa-comment"></i>
+                            <span>Special Requests</span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Additional Requirements</label>
+                            <textarea id="specialRequests" rows="4" placeholder="Tell us about any special requirements..."></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Booking Summary -->
+            <div class="summary-card">
+                <h3><i class="fas fa-file-invoice"></i> Booking Summary</h3>
+                
+                <div class="project-preview">
+                    <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=2075&q=80" alt="Project Preview" id="previewImage">
+                    <h4 id="projectName">Modern Luxury Villa</h4>
+                    <p id="projectLocation">Whitefield, Bangalore</p>
+                </div>
+                
+                <div class="price-breakdown">
+                    <div class="price-item">
+                        <span>Base Price:</span>
+                        <span id="basePrice">₹2,50,00,000</span>
+                    </div>
+                    <div class="price-item">
+                        <span>Room Configuration:</span>
+                        <span id="configPrice">₹0</span>
+                    </div>
+                    <div class="price-item">
+                        <span>Additional Facilities:</span>
+                        <span id="facilitiesPrice">₹0</span>
+                    </div>
+                    <div class="price-item">
+                        <span>Taxes (GST 5%):</span>
+                        <span id="taxAmount">₹12,50,000</span>
+                    </div>
+                    <div class="price-item total">
+                        <span>Total Amount:</span>
+                        <span id="totalAmount">₹2,62,50,000</span>
+                    </div>
+                </div>
+                
+                <button class="submit-btn" onclick="submitBooking()">
+                    <i class="fas fa-check-circle"></i> Confirm Booking
+                </button>
+                
+                <p style="text-align: center; margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">
+                    <i class="fas fa-lock"></i> Your information is secure
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Dream<span style="color: #ffd700;">Home</span></h3>
+                <p>Creating beautiful, functional, and sustainable homes that reflect your unique style and needs.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/projects">Our Projects</a></li>
+                    <li><a href="/architecture">Architects</a></li>
+                    <li><a href="/about">About Us</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Services</h3>
+                <ul>
+                    <li><a href="#">Home Design</a></li>
+                    <li><a href="#">Interior Design</a></li>
+                    <li><a href="#">3D Visualization</a></li>
+                    <li><a href="#">Consultation</a></li>
+                    <li><a href="#">Renovation</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <ul>
+                    <li><i class="fas fa-phone"></i> +91 98765 43210</li>
+                    <li><i class="fas fa-envelope"></i> info@dreamhome.com</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Bangalore, India</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 Dream Home Design. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Update size display
+        function updateSizeValue() {
+            const size = document.getElementById('roomSize').value;
+            document.getElementById('sizeDisplay').textContent = size;
+            updatePrice();
+        }
+
+        // Update budget display
+        function updateBudgetValue() {
+            const budget = document.getElementById('budget').value;
+            const crore = (budget / 10000000).toFixed(1);
+            document.getElementById('budgetDisplay').textContent = crore;
+        }
+
+        // Update project details
+        function updateProjectDetails() {
+            const project = document.getElementById('project');
+            const selected = project.options[project.selectedIndex];
+            
+            if(selected.value) {
+                const price = selected.getAttribute('data-price');
+                document.getElementById('basePrice').textContent = '₹' + Number(price).toLocaleString('en-IN');
+                
+                // Update preview image based on selection
+                const images = {
+                    '1': 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9',
+                    '2': 'https://images.unsplash.com/photo-1600585154526-990dced4db0d',
+                    '3': 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c',
+                    '4': 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3',
+                    '5': 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
+                    '6': 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d'
+                };
+                
+                document.getElementById('previewImage').src = images[selected.value] + '?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80';
+                document.getElementById('projectName').textContent = selected.text.split(' - ')[0];
+            }
+            
+            updatePrice();
+        }
+
+        // Calculate total price
+        function updatePrice() {
+            const project = document.getElementById('project');
+            let basePrice = 0;
+            
+            if(project.value) {
+                basePrice = Number(project.options[project.selectedIndex].getAttribute('data-price'));
+            }
+            
+            // Room configuration adjustments
+            const bedrooms = Number(document.getElementById('bedrooms').value);
+            const bathrooms = Number(document.getElementById('bathrooms').value);
+            const roomSize = Number(document.getElementById('roomSize').value);
+            
+            const configMultiplier = (bedrooms * 0.1) + (bathrooms * 0.05) + (roomSize / 25000);
+            const configPrice = basePrice * configMultiplier;
+            
+            // Facilities cost
+            let facilitiesPrice = 0;
+            if(document.getElementById('facilityPool').checked) facilitiesPrice += 1500000;
+            if(document.getElementById('facilityGym').checked) facilitiesPrice += 500000;
+            if(document.getElementById('facilityGarden').checked) facilitiesPrice += 800000;
+            if(document.getElementById('facilitySmart').checked) facilitiesPrice += 1000000;
+            if(document.getElementById('facilityParking').checked) facilitiesPrice += 300000;
+            if(document.getElementById('facilitySecurity').checked) facilitiesPrice += 400000;
+            if(document.getElementById('facilityFurniture').checked) facilitiesPrice += 1200000;
+            if(document.getElementById('facilityAC').checked) facilitiesPrice += 700000;
+            
+            // Calculate totals
+            const subtotal = basePrice + configPrice + facilitiesPrice;
+            const tax = subtotal * 0.05;
+            const total = subtotal + tax;
+            
+            // Update display
+            document.getElementById('configPrice').textContent = '₹' + Math.round(configPrice).toLocaleString('en-IN');
+            document.getElementById('facilitiesPrice').textContent = '₹' + facilitiesPrice.toLocaleString('en-IN');
+            document.getElementById('taxAmount').textContent = '₹' + Math.round(tax).toLocaleString('en-IN');
+            document.getElementById('totalAmount').textContent = '₹' + Math.round(total).toLocaleString('en-IN');
+        }
+
+        // Submit booking
+        function submitBooking(event) {
+            event.preventDefault();
+            
+            // Validate form
+            const firstName = document.getElementById('firstName')?.value;
+            const lastName = document.getElementById('lastName')?.value;
+            const email = document.getElementById('email')?.value;
+            const phone = document.getElementById('phone')?.value;
+            const project = document.getElementById('project')?.value;
+            
+            if(!firstName || !lastName || !email || !phone || !project) {
+                alert('Please fill all required fields');
+                return;
+            }
+            
+            // Show success modal
+            document.getElementById('successModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            
+            // Log booking data (for demo)
+            console.log('Booking submitted:', {
+                firstName,
+                lastName,
+                email,
+                phone,
+                project,
+                bedrooms: document.getElementById('bedrooms').value,
+                bathrooms: document.getElementById('bathrooms').value,
+                roomSize: document.getElementById('roomSize').value,
+                color: document.querySelector('input[name="color"]:checked')?.value,
+                budget: document.getElementById('budget').value,
+                paymentMode: document.getElementById('paymentMode').value,
+                facilities: {
+                    pool: document.getElementById('facilityPool').checked,
+                    gym: document.getElementById('facilityGym').checked,
+                    garden: document.getElementById('facilityGarden').checked,
+                    smart: document.getElementById('facilitySmart').checked,
+                    parking: document.getElementById('facilityParking').checked,
+                    security: document.getElementById('facilitySecurity').checked,
+                    furniture: document.getElementById('facilityFurniture').checked,
+                    ac: document.getElementById('facilityAC').checked
+                }
+            });
+        }
+
+        // Sign In Modal Functions
+        function openSignInModal() {
+            document.getElementById('signinModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSignInModal() {
+            document.getElementById('signinModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('signinModal');
+            if (event.target == modal) {
+                closeSignInModal();
+            }
+        }
+
+        // Sign In Form Submission
+        document.getElementById('signinForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Sign in successful! (Demo)');
+            closeSignInModal();
+        });
+
+        // Open Register
+        function openRegister() {
+            closeSignInModal();
+            window.location.href = '/register';
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updatePrice();
+            
+            // Set default project if coming from project detail
+            const urlParams = new URLSearchParams(window.location.search);
+            const projectId = urlParams.get('project');
+            if(projectId) {
+                const projectSelect = document.getElementById('project');
+                projectSelect.value = projectId;
+                updateProjectDetails();
+            }
+        });
+    </script>
+</body>
+</html>
