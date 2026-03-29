@@ -29,6 +29,3 @@
 | Frontend | HTML, CSS, JavaScript |
 | Templating | Jinja2 |
 
----
-
-## 📁 Project Structure
